@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecting...</title>
+  <script>
+    fetch('links.json')
+      .then(response => response.json())
+      .then(data => {
+        const code = window.location.pathname.substring(1);
+        const target = data[code];
+        if (target) {
+          window.location.href = target;
+        } else {
+          document.body.innerText = "Link nicht gefunden.";
+        }
+      });
+  </script>
+</head>
+<body>
+  Weiterleitung...
+</body>
+</html>
+``
