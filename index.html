@@ -1,26 +1,15 @@
-<!-- trigger build -->
 
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Redirecting...</title>
-  <script>
-    fetch('links.json')
-      .then(response => response.json())
-      .then(data => {
-        const code = window.location.pathname.substring(1);
-        const target = data[code];
-        if (target) {
-          window.location.href = target;
-        } else {
-          document.body.innerText = "Link nicht gefunden.";
-        }
-      });
-  </script>
-</head>
-<body>
-  Weiterleitung...
-</body>
-</html>
-``
+<script>
+(async () => {
+  const path = window.location.pathname.split('/').pop();
+  const res = await fetch('links.json');
+  const links = await res.json();
+
+  if (links[path]) {
+    window.location.href = links[path];
+  } else {
+    document.body.innerText = 'Kein Link für "' + path + '" gefunden.';
+  }
+})();
+</script>
+
