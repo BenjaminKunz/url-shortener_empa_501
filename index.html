@@ -1,15 +1,17 @@
 
 <script>
-(async () => {
-  const path = window.location.pathname.split('/').pop();
-  const res = await fetch('links.json');
-  const links = await res.json();
+  const params = new URLSearchParams(window.location.search);
+  const code = params.get('code');
 
-  if (links[path]) {
-    window.location.href = links[path];
-  } else {
-    document.body.innerText = 'Kein Link für "' + path + '" gefunden.';
-  }
-})();
+  fetch('links.json')
+    .then(response => response.json())
+    .then(data => {
+      const target = data[code];
+      if (target) {
+        window.location.href = target;
+      } else {
+        document.body.innerText = "Link nicht gefunden.";
+      }
+    });
 </script>
-
+``
